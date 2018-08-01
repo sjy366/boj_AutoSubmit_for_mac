@@ -72,6 +72,8 @@ for cookie in cookies:
 soup = bs(sess.get(url).text, 'html.parser')
 if soup.find('a', {'class': 'username'}) is None:
     print("\nLogin failed : Invalid ID or Password.")
+    with open("./.data/user.dat", 'w') as f:
+        f.write('')
     sys.exit()
 
 # Make code
