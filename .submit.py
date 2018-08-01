@@ -2,6 +2,7 @@ import sys
 import getpass
 import requests
 import platform
+import pickle
 from selenium import webdriver
 from bs4 import BeautifulSoup as bs
 
@@ -18,6 +19,8 @@ result = {
     '메모리 초과', '출력 초과', '런타임 에러', '컴파일 에러'
 }
 
+set_cookie_flag = False
+
 # Input user data
 with open("./.data/user.dat", 'r') as f:
     data = f.readline().split()
@@ -28,32 +31,39 @@ with open("./.data/user.dat", 'r') as f:
             f.write(id_str + ' ' + pw_str)
             USER_INFO['id'] = id_str
             USER_INFO['pw'] = pw_str
+            set_cookie_flag = True
     else:
         USER_INFO['id'] = data[0]
         USER_INFO['pw'] = data[1]
 
-# Set driver
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-options.add_argument('window-size=1920x1080')
-options.add_argument("disable-gpu")
-os_name = platform.system()
-if os_name == "Windows":
-    driver = webdriver.Chrome('./.driver/chromedriver_win.exe', chrome_options=options)
-elif os_name == "Darwin":
-    driver = webdriver.Chrome('./.driver/chromedriver_mac', chrome_options=options)
-elif os_name == "Linux":
-    driver = webdriver.Chrome('./.driver/chromedriver_linux', chrome_options=options)
+if set_cookie_flag:
+    # Set driver
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument("disable-gpu")
+    os_name = platform.system()
+    if os_name == "Windows":
+        driver = webdriver.Chrome('./.driver/chromedriver_win.exe', chrome_options=options)
+    elif os_name == "Darwin":
+        driver = webdriver.Chrome('./.driver/chromedriver_mac', chrome_options=options)
+    elif os_name == "Linux":
+        driver = webdriver.Chrome('./.driver/chromedriver_linux', chrome_options=options)
 
-# Login by driver
-driver.get(url + "/login")
-driver.find_element_by_name('login_user_id').send_keys(USER_INFO['id'])
-driver.find_element_by_name('login_password').send_keys(USER_INFO['pw'])
-driver.find_element_by_xpath("/html/body/div[3]/div[3]/div/div/form/div[4]/div[2]/button").click()
+    # Login by driver
+    driver.get(url + "/login")
+    driver.find_element_by_name('login_user_id').send_keys(USER_INFO['id'])
+    driver.find_element_by_name('login_password').send_keys(USER_INFO['pw'])
+    driver.find_element_by_xpath("/html/body/div[3]/div[3]/div/div/form/div[4]/div[2]/button").click()
+    cookies = driver.get_cookies()
+    with open("./.data/cookie.dat", 'wb') as f:
+        pickle.dump(cookies, f)
+else:
+    with open("./.data/cookie.dat", 'rb') as f:
+        cookies = pickle.load(f)
 
 # Set cookies
 sess = requests.Session()
-cookies = driver.get_cookies()
 for cookie in cookies:
     sess.cookies.set(cookie['name'], cookie['value'])
 
