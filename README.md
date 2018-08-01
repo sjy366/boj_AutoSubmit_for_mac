@@ -9,8 +9,9 @@ $ python .submit.py [problem_number.cpp]
 ```	
 OR
 ```
-alias submit='python3 .submit.py'
-submit [problem_number.cpp]
+$ python .setup.py install
+$ alias submit='python3 .submit.py'
+$ submit [problem_number.cpp]
 ```
 
 * C/C++로 작성 된 소스코드만 제출이 가능합니다.
