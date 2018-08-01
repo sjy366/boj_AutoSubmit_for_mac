@@ -14,6 +14,7 @@ $ alias submit='python3 .submit.py'
 $ submit [problem_number.cpp]
 ```
 
+* 1000.cpp 파일로 테스트해보세요.
 * C/C++로 작성 된 소스코드만 제출이 가능합니다.
 * 제출할 소스코드가 .submit.py와 같은 경로에 있어야 합니다.
 
