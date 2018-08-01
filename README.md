@@ -4,12 +4,12 @@ BOJ Auto-Submit for mac
 ## 1. 실행방법
 
 ```
-$ python .setup.py install
-$ python .submit.py [problem_number.cpp]
+$ python3 .setup.py install
+$ python3 .submit.py [problem_number.cpp]
 ```	
 OR
 ```
-$ python .setup.py install
+$ python3 .setup.py install
 $ alias submit='python3 .submit.py'
 $ submit [problem_number.cpp]
 ```
