@@ -4,6 +4,7 @@ BOJ Auto-Submit for mac
 ## 1. 실행방법
 
 ```
+$ python .setup.py install
 $ python .submit.py [problem_number.cpp]
 ```	
 OR
