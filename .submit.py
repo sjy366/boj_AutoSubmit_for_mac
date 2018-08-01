@@ -55,6 +55,7 @@ if set_cookie_flag:
     driver.get(url + "/login")
     driver.find_element_by_name('login_user_id').send_keys(USER_INFO['id'])
     driver.find_element_by_name('login_password').send_keys(USER_INFO['pw'])
+    driver.find_element_by_name('auto_login').send_keys('on')
     driver.find_element_by_xpath("/html/body/div[3]/div[3]/div/div/form/div[4]/div[2]/button").click()
     cookies = driver.get_cookies()
     with open("./.data/cookie.dat", 'wb') as f:
