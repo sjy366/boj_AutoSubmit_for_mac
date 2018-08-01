@@ -31,6 +31,7 @@ with open("./.data/user.dat", 'r') as f:
             f.write(id_str + ' ' + pw_str)
             USER_INFO['id'] = id_str
             USER_INFO['pw'] = pw_str
+            print()
             set_cookie_flag = True
     else:
         USER_INFO['id'] = data[0]
