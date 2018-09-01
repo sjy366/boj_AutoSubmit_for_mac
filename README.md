@@ -1,7 +1,9 @@
 BOJ Auto-Submit
 =====================
 
-## 1. 실행방법
+[Baekjoon Online Judge](https://www.acmicpc.net/) 에 소스코드를 CLI로 제출합니다.
+
+## 1. Run
 
 ```
 $ python3 .setup.py install
