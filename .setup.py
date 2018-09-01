@@ -5,9 +5,9 @@ py_modules = [
     'bs4'
 ]
 
-setup(name='BOJ_Code_Downloader',
-      version='1.0',
-      description='This is BOJ_Code_Downloader.',
+setup(name='BOJ-Auto-Submit',
+      version='1.1',
+      description='BOJ-Auto-Submit',
       author='Jungyeon Sohn (sjy366)',
       author_email='sjy20131565@gmail.com',
       install_requires=py_modules)
