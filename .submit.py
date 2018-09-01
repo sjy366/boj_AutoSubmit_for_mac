@@ -47,7 +47,7 @@ def sign_in():
     sess.post(url + "/signin", headers=headers, data=data)
 
 def is_invalid_login():
-    soup = bs(sess.get(url).text, 'html.parser')
+    soup = bs(sess.get(url, headers=headers).text, 'html.parser')
     if soup.find('a', {'class': 'username'}) is None:
         print("Login failed : Invalid ID or Password.")
         with open("./.data/user.dat", 'w') as f:
