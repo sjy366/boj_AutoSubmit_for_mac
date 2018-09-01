@@ -5,12 +5,6 @@ from bs4 import BeautifulSoup as bs
 
 url = "https://www.acmicpc.net"
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7',
-    'Referer': url,
-    'Origin': url
-}
-
 USER_INFO = {
     'id': '',
     'pw': ''
@@ -44,10 +38,10 @@ def sign_in():
         'login_user_id': USER_INFO['id'],
         'login_password': USER_INFO['pw']
     }
-    sess.post(url + "/signin", headers=headers, data=data)
+    sess.post(url + "/signin", data=data)
 
 def is_invalid_login():
-    soup = bs(sess.get(url, headers=headers).text, 'html.parser')
+    soup = bs(sess.get(url).text, 'html.parser')
     if soup.find('a', {'class': 'username'}) is None:
         print("Login failed : Invalid ID or Password.")
         with open("./.data/user.dat", 'w') as f:
@@ -63,7 +57,7 @@ def load_code(filename):
     return submit_code
 
 def submit(problem_number, submit_code, language):
-    soup = bs(sess.get(url + "/submit/" + problem_number, headers=headers).text, 'html.parser')
+    soup = bs(sess.get(url + "/submit/" + problem_number).text, 'html.parser')
     key = soup.find('input', {'name': 'csrf_key'})['value']
     language_code = 49 # default: c++
 
@@ -85,13 +79,13 @@ def submit(problem_number, submit_code, language):
         'code_open': 'open',
         'csrf_key': key
     }
-    sess.post(url + "/submit/" + problem_number, headers=headers, data=data)
+    sess.post(url + "/submit/" + problem_number, data=data)
 
 def print_result(problem_number):
     done = False
     while not done:
         _url = url + "/status?from_mine=1&problem_id=" + problem_number + "&user_id=" + USER_INFO['id']
-        soup = bs(sess.get(_url, headers=headers).text, 'html.parser')
+        soup = bs(sess.get(_url).text, 'html.parser')
         text = soup.find('span', {'class': 'result-text'}).find('span').string.strip()
         print("\r                          ", end='')
         print("\r%s" % text, end='')
