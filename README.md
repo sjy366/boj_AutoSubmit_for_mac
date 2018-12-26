@@ -8,7 +8,7 @@ BOJ Auto-Submit
 ```
 $ python3 .setup.py install
 $ python3 .submit.py [problem_number.cpp]
-```	
+```
 OR
 ```
 $ python3 .setup.py install

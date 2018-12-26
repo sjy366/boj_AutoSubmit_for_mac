@@ -59,8 +59,13 @@ def load_code(filename):
 
 def submit(problem_number, submit_code, language):
     soup = bs(sess.get(url + "/submit/" + problem_number).text, 'html.parser')
-    key = soup.find('input', {'name': 'csrf_key'})['value']
-    language_code = 49 # default: c++
+    try:
+        key = soup.find('input', {'name': 'csrf_key'})['value']
+    except TypeError:
+        print("잘못된 문제 번호입니다.")
+        exit(4)
+
+    #language_code = 49 # default: c++
 
     if language == '.cpp' or language == '.cc':
         language_code = 49
@@ -72,7 +77,9 @@ def submit(problem_number, submit_code, language):
         language_code = 58
     elif language == '.js':
         language_code = 17
-
+    else:
+        print("지원하지 않는 언어입니다.")
+        exit(3)
     data = {
         'problem_id': problem_number,
         'source': submit_code,
@@ -95,6 +102,10 @@ def print_result(problem_number):
     print()
 
 if __name__ == "__main__":
+    if len(sys.argv) is not 2:
+        print("Usage : python ,submit.py [problem_number.cpp]")
+        exit(1)
+
     filename = sys.argv[1]
     tmp = filename.split('.')
     problem_number = tmp[0]
@@ -105,8 +116,12 @@ if __name__ == "__main__":
 
     if is_invalid_login():
         sys.exit()
+    try:
+        submit_code = load_code(filename)
+    except FileNotFoundError:
+        print("제출 파일명을 다시 확인해 주시기 바랍니다.")
+        exit(2)
 
-    submit_code = load_code(filename)
     submit(problem_number, submit_code, language)
     print_result(problem_number)
 
