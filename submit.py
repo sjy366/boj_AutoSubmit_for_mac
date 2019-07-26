@@ -20,10 +20,10 @@ result = {
 sess = requests.Session()
 
 def load_user_data():
-    with open("./.data/user.dat", 'r') as f:
+    with open(".auth", 'r') as f:
         data = f.readline().split()
         if len(data) == 0:
-            with open("./.data/user.dat", 'w') as f:
+            with open(".auth", 'w') as f:
                 id_str = input("\nUser ID:")
                 pw_str = getpass.getpass("User PW:")
                 f.write(id_str + ' ' + pw_str)
@@ -39,13 +39,13 @@ def sign_in():
         'login_user_id': USER_INFO['id'],
         'login_password': USER_INFO['pw']
     }
-    sess.post(url + "/signin", data=data)
+    response = sess.post(url + "/signin", data=data)
 
 def is_invalid_login():
     soup = bs(sess.get(url).text, 'html.parser')
     if soup.find('a', {'class': 'username'}) is None:
         print("Login failed : Invalid ID or Password.")
-        with open("./.data/user.dat", 'w') as f:
+        with open(".auth", 'w') as f:
             f.write('')
         return True
     else:

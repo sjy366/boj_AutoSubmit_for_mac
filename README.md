@@ -3,22 +3,18 @@ BOJ Auto-Submit
 
 [Baekjoon Online Judge](https://www.acmicpc.net/) 에 소스코드를 CLI로 제출합니다.
 
+---
+:warning: BOJ 로그인에 reCAPTCHA가 도입되면서 현재는 동작하지 않는 스크립트입니다.
+
 ## 1. Run
 
 ```
-$ python3 .setup.py install
-$ python3 .submit.py [problem_number.cpp]
+$ pip3 install -r requirements.txt
+$ python3 submit.py {problem_number}.{extension}
 ```
-OR
 ```
-$ python3 .setup.py install
-$ alias submit='python3 .submit.py'
-$ submit [problem_number.cpp]
+ex) python3 submit.py 1000.cpp
 ```
-
-* 1000.cpp 파일로 테스트해보세요.
-* C/C++/Python3/Java/JavaScript/Text 코드를 제출할 수 있습니다.
-* 제출할 소스코드가 .submit.py와 같은 경로에 있어야 합니다.
 
 ## 2. Using
 
